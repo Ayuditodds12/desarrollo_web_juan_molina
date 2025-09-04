@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adopciones</title>
+  <link rel="stylesheet" href="./estilo.css?v=2">
+</head>
+<body>
+  <!-- Portada / Bienvenida -->
+  <header>
+    <h1>Bienvenido al portal de adopciones</h1>
+  </header>
+
+  <!-- Menú -->
+  <!-- El código crea un menú de navegación dentro de la página. 
+  Luego usa una lista para organizar tres botones: uno para agregar un aviso de adopción,
+  otro para ver el listado de adopciones y un tercero para ver estadísticas. 
+  Cada botón tiene un identificador único que permite luego controlar sus acciones en el archivo
+  .js -->
+  <nav>
+    <ul>
+      <li><button id="agregar">Agregar aviso de adopción</button></li>
+      <li><button id="ver-listado">Ver listado de adopciones</button></li>
+      <li><button id="ver-estadisticas">Ver estadísticas</button></li>
+    </ul>
+  </nav>
+
+  <!-- Tabla con últimos avisos -->
+  <!-- El siguiente código crea una sección destinada a mostrar los últimos avisos 
+  de adopción. Incluye un título y una tabla con los encabezados que 
+  indican qué información se mostrará: fecha, comuna, sector, cantidad, 
+  tipo, edad y foto. En el cuerpo de la tabla se agregan varias filas con 
+  datos de ejemplo, cada una representando un aviso con sus detalles y una imagen. -->
+
+  <section id="avisos">
+    <h2>Últimos avisos de adopción</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Fecha publicación</th>
+        <th>Comuna</th>
+        <th>Sector</th>
+        <th>Cantidad</th>
+        <th>Tipo</th>
+        <th>Edad</th>
+        <th>Foto</th>
+      </tr>
+      </thead>
+      <tbody id="tabla-avisos">
+      <tr>
+        <td>2025-08-19 17:00</td>
+        <td>Santiago</td>
+        <td>Parque O'Higgins</td>
+        <td>1</td>
+        <td>Perro</td>
+        <td>2 años</td>
+        <td><img src="Foto-1-portada.jpg" alt="Perro"></td>
+      </tr>
+      <tr>
+        <td>2025-08-15 10:30</td>
+        <td>Estación Central</td>
+        <td>Persa</td>
+        <td>1</td>
+        <td>Gato</td>
+        <td>1 mes</td>
+        <td><img src="Foto-2-portada.jpg" alt="Gato"></td>
+      </tr>
+      <tr>
+        <td>2025-08-09 12:00</td>
+        <td>Santiago</td>
+        <td>Beauchef 850, terraza</td>
+        <td>4</td>
+        <td>Gato</td>
+        <td>6 meses</td>
+        <td><img src="Foto-3-portada.jpg" alt="Gato"></td>
+      </tr>
+      <tr>
+        <td>2025-08-01 7:32</td>
+        <td>Quinta Normal</td>
+        <td>Plaza</td>
+        <td>2</td>
+        <td>Perro</td>
+        <td>2 meses</td>
+        <td><img src="Foto-4-portada.jpg" alt="Gato"></td>
+      </tr>
+      <tr>
+        <td>2025-07-03 17:52</td>
+        <td>Las Condes</td>
+        <td>Plaza Principal</td>
+        <td>1</td>
+        <td>Gato</td>
+        <td>2 años</td>
+        <td><img src="Foto-5-portada.jpg" alt="Gato"></td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <!-- ===== Listado de avisos (NUEVO) ===== -->
+  <!-- El código define una sección llamada "listado" que inicialmente 
+  está oculta gracias al estilo `display:none;`. Dentro de ella se muestra
+  un titulo y una tabla destinada a desplegar un listado de avisos de adopción
+  con más detalle. La tabla contiene encabezados que incluyen fechas de publicación 
+  y entrega, comuna, sector, un campo combinado con cantidad, tipo y edad de los animales, 
+  el nombre de contacto y el total de fotos asociadas. El cuerpo de la tabla está vacío,
+  marcado con el id "tabla-listado", lo que indica que será rellenado dinámicamente 
+  mediante el .js con los datos correspondientes -->
+<section id="listado" style="display:none;">
+  <h2>Listado de avisos de adopción</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha publicación</th>
+          <th>Fecha entrega</th>
+          <th>Comuna</th>
+          <th>Sector</th>
+          <th>Cantidad · tipo · edad</th>
+          <th>Nombre contacto</th>
+          <th>Total fotos</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-listado"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===== Detalle del aviso (NUEVO) ===== -->
+<!-- El código define una sección llamada "detalle" que al inicio está 
+oculta con `display:none;`. Dentro muestra un título y un contenedor 
+con id "detalle-contenido", pensado para que se rellene dinámicamente 
+con la información completa de un aviso de adopción. Además, incluye 
+dos botones: uno para regresar al listado de avisos y otro para volver a 
+la portada. Esta sección permite mostrar información más específica de un 
+aviso cuando el usuario lo selecciona desde la tabla. -->
+<section id="detalle" style="display:none;">
+  <h2>Detalle del aviso</h2>
+  <div id="detalle-contenido" class="detalle-grid"></div>
+  <div class="acciones">
+    <button id="volver-listado">Volver al listado</button>
+    <button id="volver-portada-2" class="btn-secundario">Volver a la portada</button>
+  </div>
+</section>
+
+<!-- ===== Modal foto grande (NUEVO) ===== -->
+<!-- El código crea un modal destinado a mostrar una foto en tamaño grande. 
+El contenedor principal tiene el id "modal-foto" y está configurado como 
+un cuadro de diálogo accesible. Dentro se encuentra un div con la clase 
+"modal-contenido foto", que contiene una imagen con id "img-ampliada", 
+inicialmente cargada con un gif transparente a modo de marcador. Junto 
+a la imagen hay un botón con id "cerrar-foto" que permite cerrar el modal. 
+Este bloque se activa cuando el usuario quiere ver en detalle alguna foto 
+asociada a un aviso de adopción. -->
+<div id="modal-foto" class="modal" aria-hidden="true" role="dialog">
+  <div class="modal-contenido foto" role="document">
+    <img id="img-ampliada" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Foto ampliada">
+    <button id="cerrar-foto" class="btn-secundario">Cerrar</button>
+  </div>
+</div>
+
+  <!-- Formulario (oculto por defecto) -->
+  <!-- El código define una sección llamada "formulario-adopcion" 
+  que al inicio está oculta. Dentro se incluye un formulario identificado 
+  con id "formulario", que no usa validación automática del navegador 
+  (`novalidate`). El formulario pide datos relacionados con el lugar de entrega: 
+  primero la región, a través de un menú desplegable con todas las regiones de 
+  Chile; luego la comuna (solo dos inventados), con un segundo select de ejemplo; y finalmente el 
+  sector, mediante un campo de texto limitado a 100 caracteres. 
+  Con esto se estructura la primera parte del formulario para registrar un 
+  aviso de adopción. -->
+  <section id="formulario-adopcion" style="display:none;">
+    <form id="formulario" novalidate>
+      <h2>Información del lugar de entrega</h2>
+
+      <label for="region">Región:</label>
+      <select id="region" required>
+        <option value="">Seleccionar región</option>
+        <option value="Región de Arica y Parinacota">Región de Arica y Parinacota</option>
+        <option value="Región de Tarapacá">Región de Tarapacá</option>
+        <option value="Región de Antofagasta">Región de Antofagasta</option>
+        <option value="Región de Atacama">Región de Atacama</option>
+        <option value="Región de Coquimbo">Región de Coquimbo</option>
+        <option value="Región de Valparaíso">Región de Valparaíso</option>
+        <option value="Región Metropolitana">Región Metropolitana</option>
+        <option value="Región de O'Higgins">Región de O'Higgins</option>
+        <option value="Región del Maule">Región del Maule</option>
+        <option value="Región de Ñuble">Región de Ñuble</option>
+        <option value="Región del Biobío">Región del Biobío</option>
+        <option value="Región de La Araucanía">Región de La Araucanía</option>
+        <option value="Región de Los Ríos">Región de Los Ríos</option>
+        <option value="Región de Los Lagos">Región de Los Lagos</option>
+        <option value="Región de Aysén">Región de Aysén</option>
+        <option value="Región de Magallanes">Región de Magallanes</option>
+      </select>
+      <label for="comuna">Comuna:</label>
+      <select id="comuna" required>
+        <option value="">Seleccionar comuna</option>
+        <option value="San Ramón">Comuna de San Ramón</option>
+        <option value="Olívar">Comuna de Olívar</option>
+      </select>
+
+      <label for="sector">Sector:</label>
+      <input type="text" id="sector" maxlength="100" placeholder="Ej: Parque O'Higgins">
+
+<!-- Contacto de la publicación -->
+<!-- El código corresponde a la parte del formulario donde se ingresan 
+los datos de contacto de quien publica el aviso. Incluye un título y 
+tres campos: el nombre, que debe tener entre 3 y 200 caracteres; 
+el correo electrónico, limitado a 200 caracteres y de tipo email; 
+y el número de celular, que usa un formato específico con prefijo 
+internacional y 8 dígitos, además de sugerir autocompletado y teclado 
+numérico en dispositivos móviles. Esta sección asegura que se registre 
+informacion válida para contactar al responsable de la publicaocn. -->
+      <h2>Contacto de la publicación</h2>
+
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" minlength="3" maxlength="200" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" maxlength="200" required>
+
+      <label for="celular">Número de celular:</label>
+      <input type="tel" id="celular" placeholder="+569.12345678" pattern="^\+\d{3}\.\d{8}$" autocomplete="tel" inputmode="tel">
+<!-- NUEVO BLOQUE DE CONTACTO -->
+<!-- El código agrega un bloque nuevo al formulario para especificar los 
+canales de contacto. Presenta un desplegable con distintas opciones como 
+whatsapp, telegram, X, instagram, Tiktok u otro. Según la opción seleccionada, 
+se muestra un campo de texto para ingresar el ID o la URL del contacto y un 
+botón para agregarlo, ambos ocultos por defecto. Además, se incluye un mensaje 
+de ayuda que aclara que este paso es opcional y que se pueden registrar hasta 
+cinco contactos distintos. -->
+      <label for="contactar">Contactar por:</label>
+      <div id="contacto-wrapper">
+        <div class="row-contacto">
+          <select id="contactar">
+            <option value="">Seleccionar canal</option>
+            <option value="Whatsapp">Whatsapp</option>
+            <option value="Telegram">Telegram</option>
+            <option value="X">X</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Tiktok">Tiktok</option>
+            <option value="Otro">Otro</option>
+          </select>
+
+          <input type="text" id="contacto-id" placeholder="ID o URL del contacto"
+                 minlength="4" maxlength="50" style="display:none;">
+
+          <button type="button" id="add-contacto" style="display:none;">Agregar contacto</button>
+        </div>
+
+        <small class="help">Opcional. Puedes registrar hasta 5 contactos.</small>
+
+  <!-- Listado de contactos agregados -->
+  <!-- El código completa el formulario de adopción con varias secciones. 
+  Primero, muestra una lista vacía para ir guardando los contactos agregados 
+  dinámicamente. Luego, pide la información de la mascota ofrecida en adopción: 
+  el tipo de animal, la cantidad, su edad y la unidad de medida (meses o años). 
+  También solicita la fecha en que estará disponible para entrega, una 
+  descripción opcional y la carga de fotos, permitiendo hasta cinco imágenes. 
+  Finalmente, incluye un botón para añadir más fotos y otro para enviar el 
+  formulario, con lo que se registra el aviso de adopción -->
+        <ul id="contactos-list"></ul>
+      </div>
+
+      <h2>¿Qué mascota ofrece en adopción?</h2>
+
+      <label for="tipo">Tipo:</label>
+      <select id="tipo" required>
+        <option value="">Seleccionar tipo</option>
+        <option value="gato">Gato</option>
+        <option value="perro">Perro</option>
+      </select>
+
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad" min="1" step="1" inputmode="numeric" required>
+
+      <label for="edad">Edad:</label>
+      <input type="number" id="edad" min="1" step="1" inputmode="numeric" required>
+
+      <label for="unidad-edad">Unidad medida edad:</label>
+      <select id="unidad-edad" required>
+        <option value="">Seleccionar unidad</option>
+        <option value="meses">Meses</option>
+        <option value="años">Años</option>
+      </select>
+
+      <label for="fecha-entrega">Fecha disponible para entrega:</label>
+      <input type="datetime-local" id="fecha-entrega" required>
+
+      <label for="descripcion">Descripción:</label>
+      <textarea
+        id="descripcion"
+        name="descripcion"
+        cols="50"
+        rows="10"
+        placeholder="Escribe una descripción del aviso (opcional)"></textarea>
+
+      <label for="foto-1">Foto(s) (máximo 5):</label>
+      <div id="fotos-container">
+        <input type="file" id="foto-1" name="fotos[]" accept="image/*" required>
+      </div>
+      <button type="button" id="agregar-foto">Agregar otra foto</button>
+
+      <button type="submit" id="agregar-aviso">Agregar este aviso de adopción</button>
+    </form>
+  </section>
+
+
+
+  <!-- Modal de confirmación -->
+  <!-- El código crea un modal de confirmación que aparece antes de enviar 
+  un aviso de adopción. Muestra un mensaje preguntando al usuario si 
+  realmente quiere agregar el aviso y ofrece dos opciones: confirmar 
+  con el botón "Sí, estoy seguro" o cancelar con el botón "No, no estoy seguro, 
+  quiero volver al formulario". De esta forma, se evita que se publique un 
+  aviso por error y se le da al usuario la oportunidad de revisar la información 
+  antes de confirmar -->
+  <div id="mensaje-confirmacion" class="modal" aria-hidden="true" role="dialog">
+    <div class="modal-contenido" role="document">
+      <p>¿Está seguro que desea agregar este aviso de adopción?</p>
+      <div class="modal-acciones">
+        <button id="confirmar-si">Sí, estoy seguro</button>
+        <button id="confirmar-no" class="btn-secundario">No, no estoy seguro, quiero volver al formulario</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pantalla de éxito -->
+  <!-- El código define una sección llamada "exito" que aparece al completar 
+  correctamente el proceso de registro de un aviso de adopción. Inicialmente 
+  está oculta y, al mostrarse, despliega un mensaje de agradecimiento confirmando 
+  que la información fue recibida. También incluye un botón para regresar a la 
+  portada de la aplicación, cerrando así el flujo del formulario con un mensaje 
+  positivo y claro para el usuario. -->
+  <section id="exito" style="display:none;">
+    <h2>Hemos recibido la información de adopción, muchas gracias y suerte!</h2>
+    <button id="volver-portada">Volver a la portada</button>
+  </section>
+
+  <!-- Estadísticas (NUEVO) -->
+  <!-- El código define una sección llamada "estadisticas" 
+  que al inicio está oculta y se activa cuando el usuario quiere ver datos 
+  agregados de los avisos de adopción. Muestra tres gráficos de ejemplo: 
+  uno de líneas con la evolución diaria, otro de torta con la distribución 
+  por tipo de mascota y un tercero de barras comparando gatos y perros por mes. 
+  Cada gráfico tiene su descripción mediante `<figcaption>` para mayor claridad. 
+  Al final, se incluye un botón para volver a la portada y se enlaza el 
+  archivo `func.js`, que contiene la lógica de interacción de toda la 
+  aplicación. -->
+  <section id="estadisticas" style="display:none;">
+    <h2>Estadísticas</h2>
+    <div class="charts-grid">
+      <figure>
+        <img src="grafico1.png" alt="Gráfico de líneas: avisos por día" width="800" height="400">
+        <figcaption>Gráfico 1: Cantidad de avisos por día.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="grafico2.png" alt="Gráfico de torta: total de avisos por tipo de mascota" width="800" height="400">
+        <figcaption>Gráfico 2: Total de avisos por tipo de mascota.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="grafico3.png" alt="Gráfico de barras: avisos por mes (gatos vs. perros)" width="800" height="400">
+        <figcaption>Gráfico 3: Avisos por mes (gatos vs. perros).</figcaption>
+      </figure>
+    </div>
+
+    <div class="acciones">
+      <button id="volver-portada-3" class="btn-secundario">Volver a la portada</button>
+    </div>
+  </section>
+
+  <script src="func.js"></script>
+</body>
+</html>
